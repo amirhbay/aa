@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>داشبورد - نرم‌افزار حسابداری</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif !important;
+            direction: rtl;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
+            color: #fff;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 10px 20px;
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .form-section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .form-section h5 { margin-top: 0; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <div id="sidebar" class="sidebar">
+            <h4 class="text-center mb-3">منوی اصلی</h4>
+            <ul>
+                <li><a href="#" id="basic-info-link"><i class="fas fa-info-circle ml-2"></i> اطلاعات پایه</a></li>
+                <li><a href="#" id="sales-purchases-link"><i class="fas fa-shopping-cart ml-2"></i> خرید و فروش</a></li>
+                <li><a href="#" id="receipts-payments-link"><i class="fas fa-arrow-down ml-2"></i> دریافت و پرداخت</a></li>
+                <li><a href="#" id="reports-link"><i class="fas fa-chart-line ml-2"></i> گزارشات</a></li>
+                <li><a href="#" id="inventory-link"><i class="fas fa-boxes ml-2"></i> انبار</a></li>
+                <li><a href="#" id="customers-link"><i class="fas fa-users ml-2"></i> مشتریان</a></li>
+                <li><a href="#" id="settings-link"><i class="fas fa-cog ml-2"></i> تنظیمات</a></li>
+                <li><a href="#" id="backup-link"><i class="fas fa-database ml-2"></i> پشتیبان گیری</a></li>
+            </ul>
+            <a href="#" id="logout-sidebar"><i class="fas fa-sign-out-alt ml-2"></i> خروج</a>
+        </div>
+        <div id="main-content" class="content">
+            <div class="header">
+                <h1>داشبورد</h1>
+                <div>
+                    <span class="ml-3">کاربر: وحید وهابی</span> <button class="btn btn-sm btn-outline-danger" id="logout-header">خروج</button>
+                </div>
+            </div>
+           <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header text-right">
+                                <i class="fas fa-chart-pie ml-2"></i> خلاصه مالی
+                            </div>
+                            <div class="card-body">
+                                <p>مجموع درآمد: <span id="total-income"></span></p>
+                                <p>مجموع هزینه‌ها: <span id="total-expenses"></span></p>
+                                <p>سود/زیان خالص: <span id="net-profit"></span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header text-right">
+                                <i class="fas fa-university ml-2"></i> وضعیت حساب‌ها
+                            </div>
+                            <div class="card-body">
+                                <p>حساب بانکی شماره 1: <span id="account-balance-1"></span></p>
+                                <p>صندوق نقد اصلی: <span id="cash-balance"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header text-right">
+                                <i class="fas fa-history ml-2"></i> آخرین فعالیت‌ها
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">ثبت فاکتور جدید به شماره 1402/10/25</li>
+                                    <li class="list-group-item">ویرایش اطلاعات مشتری با نام "شرکت الف"</li>
+                                    <li class="list-group-item">دریافت مبلغ 5,000,000 ریال از مشتری "آقای ب"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header text-right">
+                                <i class="fas fa-list-alt ml-2"></i> آخرین تراکنش‌ها
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>تاریخ</th>
+                                            <th>شرح</th>
+                                            <th>نوع</th>
+                                            <th>مبلغ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-transactions">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header text-right">
+                                <i class="fas fa-chart-bar ml-2"></i> نمودارهای تحلیلی
+                            </div>
+                            <div class="card-body">
+                                <canvas id="income-expense-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="define-product-dialog" title="مدیریت کالا و خدمات" style="display:none;">
+        <button id="open-define-new-product-dialog" class="btn btn-primary mb-3">تعریف کالا</button>
+        <button id="open-detailed-define-new-product-dialog" class="btn btn-primary mb-3">تعریف کالای جدید (کامل)</button>
+
+        <h2>لیست کالاها</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>نام کالا</th>
+                    <th>قیمت</th>
+                    <th>ویرایش</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
+            <tbody id="product-list-body">
+            </tbody>
+        </table>
+
+        <div id="define-new-product-inner-dialog" title="تعریف کالای جدید" style="display:none;">
+            <form id="define-new-product-form">
+                <label for="new-product-name">نام کالا:</label>
+                <input type="text" id="new-product-name" name="new-product-name" class="form-control"><br><br>
+                <label for="new-product-price">قیمت:</label>
+                <input type="number" id="new-product-price" name="new-product-price" class="form-control"><br><br>
+                <button type="button" class="btn btn-primary">ذخیره</button>
+            </form>
+        </div>
+
+        <div id="define-detailed-new-product-dialog" title="تعریف کالای جدید (کامل)" style="display:none;">
+            <ul class="nav nav-tabs mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">کالا</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">خدمت</a>
+                </li>
+            </ul>
+            <form id="define-detailed-new-product-form">
+                <div class="form-section">
+                    <h5>مشخصات عمومی</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-barcode">بارکد:</label>
+                            <input type="text" id="new-product-barcode" name="barcode" class="form-control">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-name">نام کالا:</label>
+                            <input type="text" id="new-product-name" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-code">کد کالا:</label>
+                            <input type="text" id="new-product-code" name="code" class="form-control" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-upload-image">آپلود تصویر:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="new-product-upload-image" name="upload_image">
+                                <label class="custom-file-label" for="new-product-upload-image">انتخاب فایل</label>
+                            </div>
+                            <small class="form-text text-muted">حداکثر اندازه تصویر ۱ مگابایت، فرمت‌های png, jpg, jpeg.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-main-unit">واحد اصلی:</label>
+                            <select class="form-control" id="new-product-main-unit" name="main_unit">
+                                <option value="">انتخاب کنید</option>
+                                <option value="عدد">عدد</option>
+                                <option value="بسته">بسته</option>
+                                <option value="کیلوگرم">کیلوگرم</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-category">گروه بندی:</label>
+                            <select class="form-control" id="new-product-category" name="category">
+                                <option value="">انتخاب کنید</option>
+                                <option value="لوازم خانگی">لوازم خانگی</option>
+                                <option value="مواد غذایی">مواد غذایی</option>
+                                <option value="پوشاک">پوشاک</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-latin-name">نام لاتین:</label>
+                            <input type="text" id="new-product-latin-name" name="latin_name" class="form-control">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="new-product-manufacturer">سازنده:</label>
+                            <input type="text" id="new-product-manufacturer" name="manufacturer" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-product-description">توضیحات:</label>
+                        <textarea class="form-control" id="new-product-description" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h5>اطلاعات خرید</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="new-product-purchase-price">قیمت خرید:</label>
+                            <input type="number" class="form-control" id="new-product-purchase-price" name="purchase_price">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="new-product-invoice-title">عنوان کالا در فاکتور خرید:</label>
+                            <input type="text" class="form-control" id="new-product-invoice-title" name="invoice_title">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h5>اطلاعات فروش</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="new-product-price">قیمت فروش:</label>
+                            <input type="number" class="form-control" id="new-product-price" name="price" required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="edit-product-inner-dialog" title="ویرایش کالا" style="display:none;">
+            <form id="edit-product-form">
+                <input type="hidden" id="edit-product-id" name="edit-product-id">
+                <label for="edit-product-name">نام کالا:</label>
+                <input type="text" id="edit-product-name" name="edit-product-name" class="form-control"><br><br>
+                <label for="edit-product-price">قیمت:</label>
+                <input type="number" id="edit-product-price" name="edit-product-price" class="form-control"><br><br>
+                <button type="button" class="btn btn-primary">ذخیره تغییرات</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Bind the submit event for the form inside the dialog
+            $("#define-detailed-new-product-dialog").on('submit', '#define-detailed-new-product-form', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                console.log('Form submitted from dialog');
+                saveDetailedNewProduct(); // Call the save function from dashboard.js
+            });
+
+            // Automatically populate the product code when the dialog is opened
+            $('#define-product-dialog').on('click', '#open-detailed-define-new-product-dialog', function() {
+                loadProductList().then(products => {
+                    const nextCode = getNextProductCode(products);
+                    $('#new-product-code').val(nextCode);
+                    $("#define-detailed-new-product-dialog").dialog("open");
+                    $('#define-detailed-new-product-form')[0].reset(); // پاک کردن تمام فیلدهای فرم (به جز کد کالا)
+                });
+            });
+
+            // Function to update the file label in the upload image input inside the dialog
+            $("#define-detailed-new-product-dialog").on('change', '#new-product-upload-image', function() {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+        });
+    </script>
+</body>
+</html>

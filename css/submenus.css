@@ -1,0 +1,59 @@
+<style>
+    .submenu-container {
+        padding: 10px;
+        background-color: #f8f9fa; /* یک رنگ پس‌زمینه ملایم */
+        border-bottom: 1px solid #dee2e6; /* یک خط جداکننده در پایین */
+    }
+
+    .submenu-container h2 {
+        font-size: 1.2rem;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: right; /* اگر جهت متن راست به چپ هست */
+    }
+
+    .submenu-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex; /* برای نمایش افقی آیتم‌ها */
+        gap: 20px; /* فاصله‌ای بین آیتم‌ها */
+    }
+
+    .submenu-list li a {
+        display: block;
+        padding: 8px 15px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ccc; /* یک حاشیه دور لینک‌ها */
+        border-radius: 5px; /* گوشه‌های گرد */
+        background-color: #fff; /* پس‌زمینه سفید برای لینک‌ها */
+    }
+
+    .submenu-list li a:hover {
+        background-color: #e9ecef; /* تغییر رنگ پس‌زمینه در هنگام هاور */
+    }
+
+    /* برای زیرمنوهای تودرتو (اگر دارید) */
+    .submenu-list li ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: none; /* در ابتدا مخفی */
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+
+    .submenu-list li:hover > ul {
+        display: block; /* نمایش زیرمنو در هاور */
+    }
+
+    .submenu-list li ul li a {
+        padding: 8px 15px;
+        width: 150px; /* عرض دلخواه برای آیتم‌های زیرمنو */
+    }
+</style>
