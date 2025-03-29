@@ -11,17 +11,19 @@ $(document).ready(function() {
     });
 
     // رویداد کلیک برای سربرگ اطلاعات پایه
-    $('#basic-info-link').on('click', function(event) {
-        event.preventDefault();
-        $('#main-content').load('../submenus/basic-info-submenus.html', function() {
-        console.log('زیرمنوی اطلاعات پایه لود شد.'); // اضافه کردن این خط
-            // حالا که زیرمنو لود شده، رویداد کلیک برای "کالا و خدمات" رو هندل می‌کنیم
-            $('#main-content').on('click', '#product-services-link', function(event) {
-                event.preventDefault();
-                $("#define-product-dialog").dialog("open");
-            });
+   // تغییر در بخش لود اطلاعات پایه
+$('#basic-info-link').off('click').on('click', function(event) {
+    event.preventDefault();
+    $('#main-content').load('../submenus/basic-info-submenus.html', function() {
+        console.log('زیرمنوی اطلاعات پایه لود شد.');
+        
+        // استفاده از delegate برای عناصر دینامیک
+        $(document).off('click', '#product-services-link').on('click', '#product-services-link', function(event) {
+            event.preventDefault();
+            $("#define-product-dialog").dialog("open");
         });
     });
+});
 
     // رویداد کلیک برای سربرگ خرید و فروش
     $('#sales-purchases-link').on('click', function(event) {
@@ -66,19 +68,20 @@ $(document).ready(function() {
     });
 
     // инициализировать کردن پنجره شناور اصلی "مدیریت کالا و خدمات"
-    $("#define-product-dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        width: 900, // افزایش عرض پنجره برای جا دادن فرم کامل
-        buttons: {
-            "بستن": function() {
-                $(this).dialog("close");
-            }
-        },
-        open: function(event, ui) {
-            loadProductList().then(data => displayProductList(data));
-        }
-    });
+// تغییر در تعریف مودال اصلی
+$("#define-product-dialog").dialog({
+    autoOpen: false,
+    modal: true,
+    width: 900,
+    close: function() {
+        // پاک کردن محتوای فرم‌ها هنگام بسته شدن
+        $('#define-new-product-form, #define-detailed-new-product-form')[0].reset();
+    },
+    open: function() {
+        loadProductList().then(data => displayProductList(data));
+    }
+}).parent().addClass('z-index-1050'); // برای نمایش روی همه عناصر
+
 
     // инициализировать کردن پنجره شناور داخلی "تعریف کالای جدید" (فرم ساده)
     $("#define-new-product-inner-dialog").dialog({
@@ -179,6 +182,40 @@ $(document).ready(function() {
         .catch(error => console.error('خطا در ذخیره کالای جدید (کامل):', error));
     }
 
+// اضافه کردن به فایل dashboard.js
+document.addEventListener('DOMContentLoaded', function() {
+  // جمع/باز کردن سایدبار
+  document.getElementById('toggle-sidebar').addEventListener('click', function() {
+    document.querySelector('.sidebar').classList.toggle('collapsed');
+  });
+
+  // لودینگ هوشمند برای نمودارها
+  const charts = document.querySelectorAll('.chart-container');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  charts.forEach(chart => {
+    chart.innerHTML = '<div class="chart-loading"></div>';
+    observer.observe(chart);
+  });
+
+  // تورفتگی هوشمند برای منوها
+  const menuItems = document.querySelectorAll('.sidebar a');
+  menuItems.forEach(item => {
+    item.addEventListener('click', function() {
+      menuItems.forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
+
+
     // инициализировать کردن پنجره شناور داخلی "ویرایش کالا"
     $("#edit-product-inner-dialog").dialog({
         autoOpen: false,
@@ -223,21 +260,29 @@ $(document).ready(function() {
             // دیگر نیازی به فراخوانی displayProductList در اینجا نیست
     }
 
-    function displayProductList(products) {
-        const productListBody = $('#product-list-body');
-        productListBody.empty();
-        products.forEach(product => {
-            const row = `
-                <tr>
-                    <td>${product.name}</td>
-                    <td>${product.price}</td>
-                    <td><button class="btn btn-sm btn-warning open-edit-product-dialog" data-product-id="${product.id}">ویرایش</button></td>
-                    <td><button class="btn btn-sm btn-danger delete-product-button" data-product-id="${product.id}">حذف</button></td>
-                </tr>
-            `;
-            productListBody.append(row);
-        });
+   function displayProductList(products) {
+    const productListBody = $('#product-list-body');
+    productListBody.empty();
+    
+    if (!products || products.length === 0) {
+        productListBody.append('<tr><td colspan="4" class="text-center">هیچ کالایی ثبت نشده است</td></tr>');
+        return;
     }
+
+    products.forEach(product => {
+        const row = `
+            <tr>
+                <td>${product.name || '---'}</td>
+                <td>${product.price ? product.price.toLocaleString() : '---'}</td>
+                <td><button class="btn btn-sm btn-warning open-edit-product-dialog" 
+                    data-product-id="${product.id}">ویرایش</button></td>
+                <td><button class="btn btn-sm btn-danger delete-product-button" 
+                    data-product-id="${product.id}">حذف</button></td>
+            </tr>
+        `;
+        productListBody.append(row);
+    });
+}
 
     function saveNewProduct() {
         const name = $('#new-product-name').val();
