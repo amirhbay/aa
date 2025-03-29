@@ -1,0 +1,479 @@
+/* Reset و فونت‌ها */
+:root {
+  --primary: #4361ee;
+  --secondary: #3f37c9;
+  --dark: #1b263b;
+  --light: #f8f9fa;
+  --success: #4cc9f0;
+  --danger: #f72585;
+  --warning: #f8961e;
+  --info: #4895ef;
+}
+
+body {
+  font-family: 'Vazirmatn', sans-serif;
+  direction: rtl;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* سایدبار با انیمیشن موجی */
+.sidebar {
+  height: 100vh;
+  background: linear-gradient(135deg, var(--dark), #2b2d42);
+  color: white;
+  padding-top: 20px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: wave 15s infinite linear;
+  z-index: -1;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.sidebar a {
+  padding: 12px 20px;
+  margin: 5px 10px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar a::after {
+  content: "";
+  position: absolute;
+  right: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2));
+  transition: all 0.6s ease;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-10px);
+  color: white;
+}
+
+.sidebar a:hover::after {
+  right: 100%;
+}
+
+.sidebar a i {
+  margin-left: 10px;
+  font-size: 1.1rem;
+}
+
+/* هدر با افکت شیشه‌ای */
+.header {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 15px 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--dark);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* کارت‌های سه‌بعدی */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-bottom: 25px;
+  overflow: hidden;
+  background: white;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-10px) rotateX(5deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: white;
+  font-weight: 600;
+  padding: 15px 20px;
+  border-bottom: none;
+  position: relative;
+}
+
+.card-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--success), transparent);
+}
+
+.card-header i {
+  margin-left: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* جدول با افکت پرنده‌ای */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  background: linear-gradient(90deg, var(--info), var(--primary));
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+  border: none;
+  position: sticky;
+  top: 0;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background: rgba(67, 97, 238, 0.05);
+  transform: scale(1.01);
+}
+
+.table tbody td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+/* دکمه‌های نئومورفیک */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+              -5px -5px 10px rgba(255, 255, 255, 0.5);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1),
+              -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+}
+
+.btn-outline-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 2px solid var(--danger);
+}
+
+/* لیست فعالیت‌ها با انیمیشن تایپینگ */
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 15px 20px;
+  position: relative;
+  animation: fadeIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.list-group-item:nth-child(1) { animation-delay: 0.1s; }
+.list-group-item:nth-child(2) { animation-delay: 0.3s; }
+.list-group-item:nth-child(3) { animation-delay: 0.5s; }
+
+.list-group-item::before {
+  content: "→";
+  position: absolute;
+  right: -15px;
+  color: var(--primary);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.list-group-item:hover::before {
+  right: 10px;
+  opacity: 1;
+}
+
+/* رسپانسیو */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px;
+    padding-top: 15px;
+  }
+  
+  .sidebar a span {
+    display: none;
+  }
+  
+  .sidebar a i {
+    margin-left: 0;
+    font-size: 1.3rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+/* اضافه کردن به فایل CSS موجود */
+:root {
+  --animation-speed: 0.4s;
+}
+
+/* بهبود سایدبار */
+.sidebar {
+  width: 250px;
+  transition: width var(--animation-speed) ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed a span {
+  display: none;
+}
+
+/* دکمه جمع/باز کردن سایدبار */
+#toggle-sidebar {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  z-index: 1000;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* بهبود کارت‌ها با سلسله مراتب بصری */
+.card {
+  transition: transform var(--animation-speed) ease, box-shadow var(--animation-speed) ease;
+}
+
+.card:hover {
+  z-index: 10;
+}
+
+/* جدول با اسکرول روان */
+.table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #f1f1f1;
+}
+
+/* پیش‌لودر برای نمودارها */
+.chart-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+/* افکت شیشه‌ای برای هدر */
+.header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* سایه‌های لایه‌ای */
+.card {
+  box-shadow: 
+    0 1px 1px rgba(0,0,0,0.08),
+    0 2px 2px rgba(0,0,0,0.08),
+    0 4px 4px rgba(0,0,0,0.08),
+    0 8px 8px rgba(0,0,0,0.08);
+}
+
+/* انیمیشن‌های میکرواینترکشن */
+button, a {
+  transition: 
+    transform var(--animation-speed) ease,
+    box-shadow var(--animation-speed) ease,
+    background-color var(--animation-speed) ease;
+}
+
+/* سیستم طراحی اتمیک */
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.badge-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
+}
+@media (max-width: 992px) {
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform var(--animation-speed) ease;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .content {
+    margin-right: 0;
+  }
+  
+  #toggle-sidebar {
+    display: block;
+  }
+}
+
+/* به این بخش از CSS اضافه کنید */
+
+.sidebar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* مخفی کردن اسکرول کلی */
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    text-align: center;
+    flex-shrink: 0; /* جلوگیری از فشرده شدن */
+}
+
+.sidebar-nav {
+    flex-grow: 1; /* پر کردن فضای باقیمانده */
+    overflow-y: auto; /* فعال کردن اسکرول عمودی */
+    scrollbar-width: thin;
+    scrollbar-color: #4a6bff #f1f5f9;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: #4a6bff;
+    border-radius: 3px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.sidebar-footer {
+    padding: 15px;
+    background: #2b2d42;
+    color: white;
+    text-align: center;
+    flex-shrink: 0; /* جلوگیری از فشرده شدن */
+}
+
+/* اضافه کردن به فایل CSS شما */
+.z-index-1050 {
+    z-index: 1050 !important;
+}
+
+.ui-dialog {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+/* رفع تداخل backdrop */
+.ui-widget-overlay {
+    z-index: 1040 !important;
+    background: rgba(0,0,0,0.5);
+}

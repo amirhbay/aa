@@ -1,0 +1,46 @@
+/* استایل‌های اضافی برای مودال دسته‌بندی */
+#categoryModal .modal-body {
+  padding: 20px;
+}
+
+#categoryModal .card {
+  height: 100%;
+}
+
+#categoryModal .table {
+  margin-bottom: 0;
+}
+
+#categoryModal .table-responsive {
+  max-height: 300px;
+  overflow-y: auto;
+}
+/* استایل برای آیتم منوی فعال */
+.nav-link.active {
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* استایل برای کارت‌های مودال */
+#categoryModal .card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+#categoryModal .card-header {
+  font-weight: 600;
+}
+
+/* استایل برای جدول */
+#categoryModal .table th {
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+}
+
+#categoryModal .table-hover tbody tr:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+/* این استیل را موقتاً اضافه کنید */
+#categoryModalTrigger {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
